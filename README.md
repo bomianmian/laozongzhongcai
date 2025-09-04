@@ -1,89 +1,31 @@
-# 劳动仲裁证据文档生成工具 - Docker部署指南
+# 劳动仲裁证据文档生成工具
 
-## 服务器准备
-1. 确保服务器已安装Docker和docker-compose
-   ```bash
-   docker --version
-   docker-compose --version
-   ```
-2. 如未安装，请先安装：
-   ```bash
-   # 安装Docker
-   curl -fsSL https://get.docker.com | sh
-   # 安装docker-compose
-   sudo curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-   sudo chmod +x /usr/local/bin/docker-compose
-   ```
+## Netlify部署指南
 
-## 部署步骤
+### 准备工作
+1. 注册并登录Netlify账号: https://app.netlify.com
+2. 将项目推送到GitHub仓库
 
-1. 将项目代码上传到服务器
-   ```bash
-   git clone [您的仓库地址]
-   cd [项目目录]
-   ```
+### 部署步骤
+1. 在Netlify中点击"New site from Git"
+2. 选择您的GitHub仓库
+3. 构建设置:
+   - 构建命令: `pnpm build`
+   - 发布目录: `dist`
+4. 点击"Deploy site"开始部署
 
-2. 构建Docker镜像
-   ```bash
-   docker-compose build
-   ```
+### 本地开发
+```bash
+# 安装依赖
+pnpm install
 
-3. 启动服务
-   ```bash
-   docker-compose up -d
-   ```
-
-4. 查看运行状态
-   ```bash
-   docker-compose ps
-   ```
-
-5. 停止服务
-   ```bash
-   docker-compose down
-   ```
-
-## 访问应用
-应用将在以下地址运行：
-```
-http://您的服务器IP:3000
+# 启动开发服务器
+pnpm dev
 ```
 
-## 配置说明
-
-### 端口修改
-如需修改端口，编辑`docker-compose.yml`文件：
-```yaml
-ports:
-  - "新端口:80"
+### 本地构建
+```bash
+pnpm build
 ```
 
-### 环境变量
-可在`.env`文件中添加环境变量：
-```
-NODE_ENV=production
-```
-
-## 常见问题
-
-### 端口冲突
-如果端口已被占用，请修改`docker-compose.yml`中的端口映射
-
-### 构建失败
-1. 检查网络连接
-2. 确保服务器资源充足
-3. 查看详细错误日志：
-   ```bash
-   docker-compose logs
-   ```
-
-### 应用无法访问
-1. 检查服务器防火墙设置
-2. 确认容器正在运行：
-   ```bash
-   docker ps
-   ```
-3. 查看应用日志：
-   ```bash
-   docker-compose logs app
-   ```
+构建后的文件将在`dist`目录中。
